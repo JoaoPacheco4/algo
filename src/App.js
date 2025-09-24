@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import AddBook from './pages/AddBook';
+import NotFound from './pages/NotFound';
+import { Container, NavBar, NavLinkStyled, Title } from './styles';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Estado levantado (lifting state) para compartilhar entre rotas
+const [books, setBooks] = useState([]);
+
+const addBook = (book) => {
+setBooks((prev) => [...prev, book]);
+};
+
+return (
+<Container>
+{/* Barra de navegação com links para as rotas */}
+<NavBar>
+<Title>📚 Biblioteca Online</Title>
+<div>
+<NavLinkStyled to="/">Home</NavLinkStyled>
+<NavLinkStyled to="/add">Cadastrar</NavLinkStyled>
+</div>
+</NavBar>
+
+  {/* Definição das rotas da aplicação */}
+  <Routes>
+    <Route path="/" element={<Home books={books} />} />
+    {/* Passamos a função addBook para a rota /add */}
+    <Route path="/add" element={<AddBook addBook={addBook} />} />
+    <Route path="*" element={<NotFound />} />
+  </Routes>
+</Container>
+
+);
 }
 
 export default App;
