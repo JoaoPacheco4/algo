@@ -1,11 +1,11 @@
 import React from 'react';
-import BookList from '../components/BookList';
+import BookList from '../components/TravelList';
 
 // Home recebe os livros via props e mostra a listagem
-function Home({ books }) {
+function Home({ travels }) {
 return (
 <div>
-<BookList books={books} />
+<BookList travels={travels} />
 </div>
 );
 }
